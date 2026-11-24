@@ -73,6 +73,7 @@ function App() {
               key={tab.label}
               type="button"
               onClick={() => setActiveTab(tab.label)}
+              aria-pressed={activeTab === tab.label}
               className={`border px-4 py-2 text-[11px] tracking-wide uppercase hover:border-black ${
                 activeTab === tab.label
                   ? 'border-black text-black'
@@ -84,7 +85,7 @@ function App() {
           ))}
         </nav>
 
-        <main className="grid grid-cols-1 gap-x-8 gap-y-16 px-6 pb-32 sm:grid-cols-2 sm:gap-y-20 lg:grid-cols-3 lg:gap-x-16 lg:gap-y-24 lg:pb-40">
+        <main id="catalogo" className="grid grid-cols-1 gap-x-8 gap-y-16 px-6 pb-32 sm:grid-cols-2 sm:gap-y-20 lg:grid-cols-3 lg:gap-x-16 lg:gap-y-24 lg:pb-40">
           {filteredProducts.map((product) => {
             const price = new Intl.NumberFormat('es-AR', {
               style: 'currency',
@@ -99,6 +100,8 @@ function App() {
                   <img
                     src={product.assets.heroFront}
                     alt={product.title}
+                    loading="lazy"
+                    decoding="async"
                     className="h-full w-full object-contain"
                   />
                 </div>
@@ -130,7 +133,7 @@ function App() {
         </main>
 
         {selectedProduct && (
-          <section ref={detailRef} className="border-t border-neutral-200 px-6 py-20">
+          <section ref={detailRef} aria-label={`Detalle de ${selectedProduct.title}`} className="border-t border-neutral-200 px-6 py-20">
             <button
               type="button"
               onClick={() => setSelectedProduct(null)}
@@ -156,6 +159,8 @@ function App() {
                         <img
                           src={image}
                           alt={selectedProduct.title}
+                          loading="lazy"
+                          decoding="async"
                           className="h-full w-full object-contain"
                         />
                       </div>
